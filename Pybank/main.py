@@ -1,8 +1,10 @@
 import os
 import csv
 
-csvpath = os.path.join(r"C:\Users\weiwei\python-challenge\Pybank\Resourses\budget_data.csv")
+#define the path to the CSV file
+csvpath = os.path.join("C:\Users\weiwei\python-challenge\Pybank\Resourses\budget_data.csv")
 
+# Initialize variables
 total_months = 0
 net_total = 0
 pre_profit = 0
@@ -10,9 +12,10 @@ changes = []
 greatest_increase = {"date":"","amount": float('-inf')}
 greatest_decrease = {"date":"","amount": float('inf')}
 
+#open and read the CSV file
 with open(csvpath,newline='') as csvfile:
     csvreader = csv.reader(csvfile,delimiter=',')
-
+    #skip the head row
     header = next(csvreader)
 
     first_row = next(csvreader)
@@ -29,16 +32,17 @@ with open(csvpath,newline='') as csvfile:
         changes.append(change)
         pre_profit=int(row[1])
 
-
+        #determine the greatest increase in profits
         if change > greatest_increase['amount']:
             greatest_increase['amount'] = change
             greatest_increase['date'] = row[0]
         
-
+        #determine the greatest decrease in profits
         if change < greatest_decrease['amount']:
             greatest_decrease['amount'] = change
             greatest_decrease['date'] = row[0]
 
+    # the conditions of average change
     if len(changes) > 0:
         average_change = sum(changes) / len(changes)
     else:
